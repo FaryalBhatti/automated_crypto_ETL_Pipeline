@@ -39,49 +39,40 @@ This repository contains a **near real-time cryptocurrency ETL pipeline** built 
 
 1. Clone the repository:
 
-```bash
+
 git clone https://github.com/FaryalBhatti/automated_crypto_ETL_Pipeline.git
 cd automated_crypto_ETL_Pipeline
-Set up a Python virtual environment and install dependencies:
+
+2. Set up a Python virtual environment and install dependencies:
 
 bash
-Copy code
 python -m venv venv
-source venv/bin/activate  # Linux/Mac
-venv\Scripts\activate     # Windows
+# Linux/Mac
+source venv/bin/activate
+# Windows
+venv\Scripts\activate
 pip install -r requirements.txt
-Set up PostgreSQL and Airflow (via Docker recommended).
 
-Configure an Airflow connection for PostgreSQL (postgres_default).
+3. Set up PostgreSQL and Airflow (Docker recommended).
+4. Configure an Airflow connection for PostgreSQL (postgres_default).
+5. Optionally, connect DBeaver to PostgreSQL for data exploration.
 
-Optionally, connect DBeaver to PostgreSQL for data exploration.
+---
 
-Usage
-Place the DAG file in your Airflow DAGs folder.
+## Usage
+- Place the DAG file in your Airflow DAGs folder.
+- Start Airflow webserver and scheduler.
+- The DAG will run every minute to fetch, transform, and load crypto data.
+- Monitor DAG execution and logs through the Airflow UI.
+- Query and explore stored data using DBeaver.
 
-Start Airflow webserver and scheduler.
+---
 
-The DAG will run every minute to fetch, transform, and load crypto data.
-
-Monitor DAG execution and logs through the Airflow UI.
-
-Query and explore stored data using DBeaver.
-
-Project Structure
-bash
-Copy code
-automated_crypto_ETL_Pipeline/
-├── dags/
-│   └── crypto_etl_dag.py       # Main Airflow DAG
-├── scripts/
-│   └── binance_api.py           # Helper functions for API fetch and transform
-├── requirements.txt             # Python dependencies
-├── Dockerfile                   # Custom Airflow image
-├── README.md
-Future Enhancements
-Support dynamic multi-symbol pipelines.
-
-Add alerts for DAG failures via Slack or email.
+## Future Enhancements
+- Support dynamic multi-symbol pipelines.
+- Add alerts for DAG failures via Slack or email.
+- Implement additional analytics metrics like EMA, volatility, etc.
+- Move to streaming architecture for sub-minute real-time processing.
 
 Implement additional analytics metrics like EMA, volatility, etc.
 
