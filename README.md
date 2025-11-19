@@ -1,45 +1,89 @@
-Overview
-========
+# Crypto ETL Pipeline with Apache Airflow
 
-Welcome to Astronomer! This project was generated after you ran 'astro dev init' using the Astronomer CLI. This readme describes the contents of the project, as well as how to run Apache Airflow on your local machine.
+This repository contains a **near real-time cryptocurrency ETL pipeline** built using **Python, Apache Airflow, and PostgreSQL**. The pipeline extracts OHLCV (Open, High, Low, Close, Volume) data from the **Binance API**, transforms it (including **Simple Moving Average (SMA) calculations**), and loads it into a **PostgreSQL database** for analysis. You can explore and manage the data using **DBeaver** or any SQL client.
 
-Project Contents
-================
+---
 
-Your Astro project contains the following files and folders:
+## Project Contents
 
-- dags: This folder contains the Python files for your Airflow DAGs. By default, this directory includes one example DAG:
-    - `example_astronauts`: This DAG shows a simple ETL pipeline example that queries the list of astronauts currently in space from the Open Notify API and prints a statement for each astronaut. The DAG uses the TaskFlow API to define tasks in Python, and dynamic task mapping to dynamically print a statement for each astronaut. For more on how this DAG works, see our [Getting started tutorial](https://www.astronomer.io/docs/learn/get-started-with-airflow).
-- Dockerfile: This file contains a versioned Astro Runtime Docker image that provides a differentiated Airflow experience. If you want to execute other commands or overrides at runtime, specify them here.
-- include: This folder contains any additional files that you want to include as part of your project. It is empty by default.
-- packages.txt: Install OS-level packages needed for your project by adding them to this file. It is empty by default.
-- requirements.txt: Install Python packages needed for your project by adding them to this file. It is empty by default.
-- plugins: Add custom or community plugins for your project to this file. It is empty by default.
-- airflow_settings.yaml: Use this local-only file to specify Airflow Connections, Variables, and Pools instead of entering them in the Airflow UI as you develop DAGs in this project.
+- **dags/**: Contains the Airflow DAG file `crypto_etl_dag.py` which defines the ETL workflow.  
+- **scripts/**: Helper Python functions for fetching and transforming data from the Binance API.  
+- **Dockerfile**: Builds the custom Airflow runtime image for this project.  
+- **requirements.txt**: Python dependencies required for the ETL pipeline.  
+- **README.md**: Project documentation and setup instructions.  
 
-Deploy Your Project Locally
-===========================
+---
 
-Start Airflow on your local machine by running 'astro dev start'.
+## Features
 
-This command will spin up five Docker containers on your machine, each for a different Airflow component:
+- **Automated ETL Workflow**: Runs every minute using **Airflow DAGs**.  
+- **Data Extraction**: Fetches OHLCV data from Binance API for BTC, ETH, and other crypto symbols.  
+- **Data Transformation**: Calculates SMA and row-wise percentage changes.  
+- **Data Loading**: Stores processed data in **PostgreSQL**, with duplicate handling.  
+- **Data Exploration**: Connect to the database using **DBeaver** or any SQL client.  
+- **Scalable Design**: Easy to extend to multiple symbols or different time intervals.  
 
-- Postgres: Airflow's Metadata Database
-- Scheduler: The Airflow component responsible for monitoring and triggering tasks
-- DAG Processor: The Airflow component responsible for parsing DAGs
-- API Server: The Airflow component responsible for serving the Airflow UI and API
-- Triggerer: The Airflow component responsible for triggering deferred tasks
+---
 
-When all five containers are ready the command will open the browser to the Airflow UI at http://localhost:8080/. You should also be able to access your Postgres Database at 'localhost:5432/postgres' with username 'postgres' and password 'postgres'.
+## Technology Stack
 
-Note: If you already have either of the above ports allocated, you can either [stop your existing Docker containers or change the port](https://www.astronomer.io/docs/astro/cli/troubleshoot-locally#ports-are-not-available-for-my-local-airflow-webserver).
+- **Python** – Core ETL logic and API integration.  
+- **Apache Airflow** – Scheduling and orchestration of DAGs.  
+- **PostgreSQL** – Storing structured cryptocurrency data.  
+- **DBeaver** – For querying, exploring, and managing PostgreSQL data.  
+- **Binance API** – Source of real-time crypto market data.  
 
-Deploy Your Project to Astronomer
-=================================
+---
 
-If you have an Astronomer account, pushing code to a Deployment on Astronomer is simple. For deploying instructions, refer to Astronomer documentation: https://www.astronomer.io/docs/astro/deploy-code/
+## Setup & Installation
 
-Contact
-=======
+1. Clone the repository:
 
-The Astronomer CLI is maintained with love by the Astronomer team. To report a bug or suggest a change, reach out to our support.
+```bash
+git clone https://github.com/yourusername/crypto-etl-pipeline.git
+cd crypto-etl-pipeline
+Set up a Python virtual environment and install dependencies:
+
+bash
+Copy code
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+venv\Scripts\activate     # Windows
+pip install -r requirements.txt
+Set up PostgreSQL and Airflow (via Docker recommended).
+
+Configure an Airflow connection for PostgreSQL (postgres_default).
+
+Optionally, connect DBeaver to PostgreSQL for data exploration.
+
+Usage
+Place the DAG file in your Airflow DAGs folder.
+
+Start Airflow webserver and scheduler.
+
+The DAG will run every minute to fetch, transform, and load crypto data.
+
+Monitor DAG execution and logs through the Airflow UI.
+
+Query and explore stored data using DBeaver.
+
+Project Structure
+bash
+Copy code
+crypto-etl-pipeline/
+├── dags/
+│   └── crypto_etl_dag.py       # Main Airflow DAG
+├── scripts/
+│   └── binance_api.py           # Helper functions for API fetch and transform
+├── requirements.txt             # Python dependencies
+├── Dockerfile                   # Custom Airflow image
+├── README.md
+Future Enhancements
+Support dynamic multi-symbol pipelines.
+
+Add alerts for DAG failures via Slack or email.
+
+Implement additional analytics metrics like EMA, volatility, etc.
+
+Move to streaming architecture for sub-minute real-time processing.
+
