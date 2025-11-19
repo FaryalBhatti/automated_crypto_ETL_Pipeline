@@ -1,4 +1,4 @@
-# Crypto ETL Pipeline with Apache Airflow
+# Automated Crypto ETL Pipeline
 
 This repository contains a **near real-time cryptocurrency ETL pipeline** built using **Python, Apache Airflow, and PostgreSQL**. The pipeline extracts OHLCV (Open, High, Low, Close, Volume) data from the **Binance API**, transforms it (including **Simple Moving Average (SMA) calculations**), and loads it into a **PostgreSQL database** for analysis. You can explore and manage the data using **DBeaver** or any SQL client.
 
@@ -40,8 +40,8 @@ This repository contains a **near real-time cryptocurrency ETL pipeline** built 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/crypto-etl-pipeline.git
-cd crypto-etl-pipeline
+git clone https://github.com/FaryalBhatti/automated_crypto_ETL_Pipeline.git
+cd automated_crypto_ETL_Pipeline
 Set up a Python virtual environment and install dependencies:
 
 bash
@@ -70,7 +70,7 @@ Query and explore stored data using DBeaver.
 Project Structure
 bash
 Copy code
-crypto-etl-pipeline/
+automated_crypto_ETL_Pipeline/
 ├── dags/
 │   └── crypto_etl_dag.py       # Main Airflow DAG
 ├── scripts/
@@ -86,4 +86,3 @@ Add alerts for DAG failures via Slack or email.
 Implement additional analytics metrics like EMA, volatility, etc.
 
 Move to streaming architecture for sub-minute real-time processing.
-
