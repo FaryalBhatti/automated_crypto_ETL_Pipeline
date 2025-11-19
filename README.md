@@ -74,6 +74,3 @@ pip install -r requirements.txt
 - Implement additional analytics metrics like EMA, volatility, etc.
 - Move to streaming architecture for sub-minute real-time processing.
 
-Implement additional analytics metrics like EMA, volatility, etc.
-
-Move to streaming architecture for sub-minute real-time processing.
